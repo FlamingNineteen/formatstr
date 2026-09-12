@@ -52,3 +52,13 @@ Operator precedence is similar to that of C++. However, operators of the same pr
 | `a && b`| ✅ | ❌ | ❌
 | `a \|\| b`| ✅ | ❌ | ❌
 | `a ? b : c` | ❌ | ❌ | ✅
+
+### Limitations
+- You cannot use the unary operator `-a` to swap the sign of a value. Subtract into `0` instead (`0-a`).
+- There is no NOT (`!a`) operator. Instead use `a == false` or `a != true`.
+- You cannot use data types other than `int`, `bool` and `str`.
+- You cannot directly typecast. You can cast a `bool` to an `int` using an operation (such as `true + 0`), and you can cast a `bool` or `int` to a `str` by placing it inside a formatted string (such as `{1+1}`)
+- You cannot use the unary operator `+a`. I'm not sure why you would though...
+
+### Examples
+`test.cpp` has some test strings that showcase various operators in action.
