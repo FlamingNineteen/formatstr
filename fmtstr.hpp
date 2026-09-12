@@ -17,6 +17,7 @@ namespace fmtstr {
         while (
             i < fstr.size() && (
                 (strcheck == "isdigit" ? std::isdigit(fstr[i]) : false) ||
+                (strcheck == "ishex" ? std::isdigit(fstr[i]) || std::string("ABCDEF").find(fstr[i]) != std::string::npos : false) ||
                 (strcheck == "isspace" ? std::isspace(fstr[i]) : false) ||
                 (strcheck == "isoperator" ? std::string("+-*/%<=>!&|^?:").find(fstr[i]) != std::string::npos : false)
             )
@@ -61,6 +62,18 @@ namespace fmtstr {
         return result;
     }
 
+    int HexToDec(std::string hex) {
+        int result = 0;
+        int deg = 1;
+
+        for (int i = hex.size() - 1; i >= 0; i--) {
+            result += deg * (hex[i] < 'A' ? hex[i] - '0' : hex[i] - 'A' + 10);
+            deg*=16;
+        }
+
+        return result;
+    }
+
     std::string fmtstr(std::string fstr);
     json Braces(std::string fstr);
 
@@ -83,7 +96,14 @@ namespace fmtstr {
 
                 if (std::isdigit(let)) {
                     i--;
-                    oplist += std::stoi(ReadUntil(fstr, i, "isdigit"));
+                    if (let == '0' && i+3 < fstr.size()) {
+                        if (fstr[i+2] == 'x') {
+                            i+=2;
+                            oplist += HexToDec(ReadUntil(fstr, i, "ishex"));
+                        }
+                        else oplist += std::stoi(ReadUntil(fstr, i, "isdigit"));
+                    }
+                    else oplist += std::stoi(ReadUntil(fstr, i, "isdigit"));
                     i--;
                 }
 

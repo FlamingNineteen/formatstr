@@ -3,10 +3,11 @@
 A quickly-made unoptimized and limited recreation of Python formatted strings in a C++ header. Requires [nlohmann/json](https://json.nlohmann.me/).
 
 ### Usage
-Include `fmtstr.hpp` and use the `fmtstr()` function.
+Include `fmtstr.hpp` and use the `fmtstr::fmtstr(<str>)` function on your desired `std::string`.
 
 ### Data Types
 - Integers `int` (int)
+  - You can define hexadecimal integers with `0x` (e.g. `0xFF` = `255`) but **only use capital letters** for alphanumeric digits
 - Booleans `bool` (bool)
 - Strings `str` (std::string)
 
