@@ -5,6 +5,10 @@
 using json = nlohmann::json;
 
 namespace fmtstr {
+    void debug(std::string s) {
+        std::cout << s << std::endl;
+    }
+
     std::string ReadUntil(std::string fstr, int &i, std::string strcheck = "") {
         std::string result = "";
 
@@ -24,6 +28,8 @@ namespace fmtstr {
     }
 
     std::string ReadUntil(std::string fstr, int &i, char stop) {
+        debug("read " + fstr);
+
         std::string result = "";
         int indent = 0;
         i++;
@@ -39,6 +45,8 @@ namespace fmtstr {
     }
 
     std::string ReadSetTimes(std::string fstr, int &i, int end) {
+        debug("read " + fstr);
+
         std::string result = "";
         end += i;
 
@@ -68,6 +76,7 @@ namespace fmtstr {
     json Braces(std::string fstr);
 
     json Braces(std::string fstr) {
+        debug("braces | " + fstr);
         json result;
         std::string read = "";
         int size = fstr.size();
@@ -118,6 +127,8 @@ namespace fmtstr {
                 i--;
             }
         }
+
+        debug(oplist.dump());
 
         for (int op = 0; oplist.size() > 1 && op < 11; op++) {
             for (int i = 1; oplist.size() > 1 && i < oplist.size(); i+=2) {
@@ -508,6 +519,7 @@ namespace fmtstr {
     }
 
     std::string fmtstr(std::string fstr) {
+        debug("string | " + fstr);
         std::string result = "";
         std::string read = "";
         int i = 0;

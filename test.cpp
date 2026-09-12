@@ -1,3 +1,4 @@
+// #include "fmtstr-debug.hpp"
 #include "fmtstr.hpp"
 
 int main() {
@@ -9,8 +10,7 @@ int main() {
     std::cout << ("FINAL:" + fmtstr::fmtstr("{32<<1}")) << std::endl;
     std::cout << ("FINAL:" + fmtstr::fmtstr("{true?63:'balright'}")) << std::endl;
     std::cout << ("FINAL:" + fmtstr::fmtstr("{(1-1==1)?6+3:'bal'+\"right\"}")) << std::endl;
-    std::cout << (fmtstr::HexToDec("38C5")) << std::endl;
     std::cout << ("FINAL:" + fmtstr::fmtstr("{0x38C5}")) << std::endl;
-    std::cout << ("FINAL:" + fmtstr::fmtstr("{    (   1 -  1 ==  1 ) ?  6 + 3:  'bal'  +    \"right\"  }")) << std::endl;
+    std::cout << ("FINAL:" + fmtstr::fmtstr("{    (   0x1 -  1 ==  1 ) ?  6 + 3:  'bal'  +    \"right\"  }")) << std::endl;
     return 0;
 }
