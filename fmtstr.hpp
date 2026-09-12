@@ -11,8 +11,6 @@ namespace fmtstr {
 
     std::string ReadUntil(std::string fstr, int &i, std::string strcheck = "") {
         std::string result = "";
-        int indent = 0;
-        i++;
 
         while (
             i < fstr.size() && (
@@ -22,8 +20,6 @@ namespace fmtstr {
                 (strcheck == "isoperator" ? std::string("+-*/%<=>!&|^?:").find(fstr[i]) != std::string::npos : false)
             )
         ) {
-            if (fstr[i] == '}' || fstr[i] == ')') indent--;
-            if (fstr[i] == '{' || fstr[i] == '(') indent++;
             result += fstr[i];
             i++;
         }
@@ -31,7 +27,7 @@ namespace fmtstr {
         return result;
     }
 
-    std::string ReadUntil(std::string fstr, int &i, char stop = '\0') {
+    std::string ReadUntil(std::string fstr, int &i, char stop) {
         debug("read " + fstr);
 
         std::string result = "";
@@ -58,6 +54,8 @@ namespace fmtstr {
             result += fstr[i];
             i++;
         }
+
+        i--;
         
         return result;
     }
@@ -87,6 +85,9 @@ namespace fmtstr {
         json oplist = {};
 
         for (int i = 0; i < size; i++) {
+            ReadUntil(fstr, i, "isspace");
+            if (i >= size) break;
+
             let = fstr[i];
 
             if (oplist.size() % 2 == 0) {
@@ -95,9 +96,8 @@ namespace fmtstr {
                 if (let == '\'' || let == '\"') oplist += fmtstr(ReadUntil(fstr, i, let));
 
                 if (std::isdigit(let)) {
-                    i--;
-                    if (let == '0' && i+3 < fstr.size()) {
-                        if (fstr[i+2] == 'x') {
+                    if (let == '0' && i+2 < fstr.size()) {
+                        if (fstr[i+1] == 'x') {
                             i+=2;
                             oplist += HexToDec(ReadUntil(fstr, i, "ishex"));
                         }
@@ -112,20 +112,17 @@ namespace fmtstr {
                         oplist += true;
                     }
                     else throw std::runtime_error("Expected true, got " + ReadSetTimes(fstr, i, 4));
-                    i--;
                 }
 
                 if (let == 'f') {
                     if (ReadSetTimes(fstr, i, 5) == "false") {
                         oplist += false;
                     }
-                    else throw std::runtime_error("Expected false, got " + ReadSetTimes(fstr, i, 5));
-                    i--;
+                    else throw std::runtime_error("Expected falalse, got " + ReadSetTimes(fstr, i, 5));
                 }
 
             }
             else {
-                i--;
                 oplist += ReadUntil(fstr, i, "isoperator");
                 i--;
             }

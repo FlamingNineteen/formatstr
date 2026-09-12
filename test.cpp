@@ -11,5 +11,6 @@ int main() {
     std::cout << ("FINAL:" + fmtstr::fmtstr("{(1-1==1)?6+3:'bal'+\"right\"}")) << std::endl;
     std::cout << (fmtstr::HexToDec("38C5")) << std::endl;
     std::cout << ("FINAL:" + fmtstr::fmtstr("{0x38C5}")) << std::endl;
+    std::cout << ("FINAL:" + fmtstr::fmtstr("{    (   1 -  1 ==  1 ) ?  6 + 3:  'bal'  +    \"right\"  }")) << std::endl;
     return 0;
 }
